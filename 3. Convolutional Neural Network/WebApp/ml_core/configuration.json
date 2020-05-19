@@ -1,0 +1,4 @@
+{
+    "max_feature" : 1000,
+    "learning_rate" : 0.01
+}

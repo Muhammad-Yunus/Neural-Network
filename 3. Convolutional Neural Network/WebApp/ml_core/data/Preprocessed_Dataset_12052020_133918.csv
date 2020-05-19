@@ -1,0 +1,2 @@
+,tweet,tweet_tokens,tweet_tokens_fdist,tweet_tokens_WSW,tweet_tokens_stemmed
+0,corona tidak berbahaya pada manusia,"['corona', 'tidak', 'berbahaya', 'pada', 'manusia']",<FreqDist with 5 samples and 5 outcomes>,"['corona', 'berbahaya', 'manusia']","['corona', 'bahaya', 'manusia']"
