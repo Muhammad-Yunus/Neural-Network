@@ -1,0 +1,143 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+{{ super() }}
+
+{% if current_user.is_authenticated %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    <i class="fa fa fa-cogs"></i>
+    Preprocessing 
+    </br>
+    <small>Case Folding, Tokenizing, Filtering (Stopword Removal) and Stemming</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Preprocessing</li>
+  </ol>
+</section>
+
+
+<section class="content">
+      <div class="row">
+        <!-- FORM SUBMIT DOCUMENTS -->
+        <div class="col-lg-6">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Profile Form</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form action="{{ url_for('preprocessing.on_after_submit') }}" method="post">
+              <div class="box-body">
+                <!-- Feedback message -->
+                {% if show_feedback_success %}
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <h4><i class="icon fa fa-check"></i> Success!</h4>
+                  The Document submitted successfully!
+                </div>
+                {% endif %}
+                <!-- End Feedback message -->
+                
+                <div class="form-group">
+                  <label>Tweet Sentences</label>
+                  <textarea name="documents" class="form-control" rows="5">{{ documents }}</textarea>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <div class="pull-right">
+                  <button type="submit" class="btn btn-default margin-l">Cancel</button>
+                  <button type="submit" class="btn btn-info ">Submit</button>
+                </div>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
+        </div>
+
+        <!-- TABLE RECORDS PREPROCESSING-->
+        <div class="col-lg-6">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Preprocessing Table Records</h3>
+              <div class="box-tools">
+                <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            {% if tableRecords is not none %}
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody><tr>
+                  <th>Document</th>
+                  <th>Term</th>
+                  <th>Stemmed</th>
+                  <th>Frequency</th>
+                </tr>
+                {% for record in tableRecords %}
+                <tr>
+                  <td>{{ record[0] }}</td>
+                  <td>{{ record[1] }}</td>
+                  <td>{{ record[2] }}</td>
+                  <td>{{ record[3] }}</td>
+                  <td>{{ record[4] }}</td>
+                </tr>
+                {% endfor %}
+              </tbody></table>
+            </div>
+            {% else %}
+            <div class="box-body">
+              <p>
+                No records to show...
+              </p>
+            </div>
+            {% endif %}
+            <!-- /.box-body -->
+          </div>
+        </div>
+      </div>
+</section>
+<!-- /.content -->
+{% else %}
+
+<center>
+  <section class="content" style="color: white">
+    <div class="col-sm-12">
+      <h1>Flask-Admin example</h1>
+      <p class="lead">
+        Authentication
+      </p>
+      <p>
+        This example shows how you can use Flask-Admin in an admin template, <br> here I used AdminLTE and <a href="https://pythonhosted.org/Flask-Security/index.html" target="_blank">Flask-Security</a> for authentication.
+      </p>
+      {% if not current_user.is_authenticated %}
+      <p>You can register as a regular user, or log in as a superuser with the following credentials: <br><br>
+
+        email: <b>admin</b> <br>
+        password: <b>admin</b> <br>
+        <br>
+        <p>
+          <a class="btn btn-primary" href="{{ url_for('security.login') }}">Login</a> <a class="btn btn-default" href="{{ url_for('security.register') }}">Register</a>
+        </p>
+        {% endif %}
+        <br>
+        <p>
+          <a class="btn btn-primary" href="/"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+        </p>
+      </div>
+    </section>
+  </center>
+
+  <br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br><br>
+  {% endif %}
+
+  {% endblock body %}
